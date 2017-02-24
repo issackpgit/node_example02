@@ -1,0 +1,41 @@
+body {
+    background-color: #ead3f7  ;
+    background-image: url("/images/img3.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+#bodydiv{
+   
+    background-color: #DCDCDC ;
+    padding: 5% 5%;
+    /*background-image: url("/images/img2.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;*/
+    opacity: 0.80;
+    filter: alpha(opacity=50);
+}
+
+#chaindet{
+background-color: lightblue ;
+    padding: 5% 0%;
+    
+
+}
+
+#transfer{
+color: red;
+}
+
+.tooltip
+{
+ display: inline;
+ position: relative;
+}
+
+
+input[type=text] {
+    width: 6%;
+    box-sizing: border-box;
+    
+}

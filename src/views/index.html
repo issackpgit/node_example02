@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html ng-app>
+	
+    <head >
+		
+		<title>Blockchain Demo</title>
+       
+         <link rel="shortcut icon" type="image/x-icon" href="./images/ibm.jpg" />
+        
+       <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+	      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/mystyle.css">
+        <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+       
+        <script 
+      src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+         
+        
+        
+        <script type = "text/javascript" src="./js/part1.js">   
+        </script>
+       <script type = "text/javascript" src="./js/ws_part1.js"> 
+          
+        </script>
+
+    </head>
+    
+   
+    
+    
+    <body class="jumbotron text-center">
+       <div id="bodydiv" >
+           
+     
+        <h2 align="center">
+            Blockchain hyperledger demo using IBM-Blockchain-js
+        </h2>
+       <br>
+            <label> Select Sender and Receiver</label> <br>
+            <label> Sender</label>
+            
+        <select id="select1">
+           
+            <option value="A">A</option>
+            <option value="B">B</option>
+        </select>  &nbsp;
+            
+            <label > Amount</label>
+            
+            <input  id="amount"  type="text" width= "10px" autocomplete="off">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            
+            <label> Receiver</label>  
+            
+        <select id="select2">
+           
+            <option value="A">A</option>
+            <option value="B">B</option>
+        </select> &nbsp;
+            
+         <input id="submit" type="button" value="submit" >
+           <br><br>
+     <label id="transfer" color="red"> </label>
+        
+        <br> <br><br>
+        
+       
+        
+        <label> Check balance </label>
+            
+        <select id="select3">   
+            <option value="A">A</option>
+            <option value="B">B</option>
+        </select>  
+        
+        <input type="button" id="balance" value="get">
+            <input type="text" id="bal" readonly autocomplete="off">
+            <br><br><br><br>
+           <hr>
+           
+         <div id="chaindet">
+          
+            
+             
+              <input  type="text" rows="2" cols="5" id="chain1"  readonly>
+              <input type="text" rows="2" cols="5" id="chain2"  readonly> 
+              <input type="text" rows="2" cols="5" id="chain3"   readonly> 
+              <input type="text" rows="2" cols="5" id="chain4"  readonly> 
+              <input type="text" rows="2" cols="5" id="chain5"  readonly> 
+              <input type="text" rows="2" cols="5" id="chain6"  readonly> 
+              <input type="text" rows="2" cols="5" id="chain7"  readonly> 
+              <input type="text" rows="2" cols="5" id="chain8"  readonly> 
+             &nbsp;&nbsp;
+             <textarea rows="1" cols="20" id="chain9"  readonly ></textarea>
+             <br><br>
+             
+             <textarea rows="5" cols="150" id="blockdetails" readonly> </textarea>
+             
+            
+           </div>
+            
+           
+        </div>
+        
+	<!-- script references -->
+		<script src="lib/jquery/dist/jquery.min.js"></script>
+		<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	</body>
+</html>

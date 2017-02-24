@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+    <head>
+		
+		<title>Blockchain Demo</title>
+	
+        <div>
+    <img src = "./images/hype.jpg" width = "1000px" height = "200px">
+</div>
+        
+        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    
+var ws = {};
+    
+$(document).on('ready',function(){
+    
+   
+    console.log("hiii");
+     $('#submit').click(function(){
+        console.log('Data');
+       
+    });
+    
+    connect_to_server();
+     $('input[name="name"]').val('r' + randStr(6));
+    
+    var send = $("#select1 option:selected" ).text();
+    var rece = $("#select2 option:selected" ).text();
+    var val = $("#amount" ).text();
+    
+    $('#submit').click(function(){
+        console.log('Data');
+        transfer(sender, receiver, value);
+    });
+    
+    
+     function transfer(sender, receiver, value){
+    console.log('transfering');
+			var obj = 	{
+							type: 'transfer',
+							sender: send,
+							receiver: rece,
+                            value:val,
+							v: 1
+						};
+			ws.send(JSON.stringify(obj));
+    }
+    
+    
+});
+    
+// =================================================================================
+// Socket Stuff
+// =================================================================================
+function connect_to_server(){
+	var connected = false;
+
+    // Redirect https requests to http so the server can handle them
+    if(this.location.href.indexOf("https://") > -1) {
+        this.location.href = this.location.href.replace("https://", "http://");
+    }
+
+	connect();
+
+	function connect(){
+		var wsUri = 'ws://' + document.location.hostname + ':' + document.location.port;
+		console.log('Connectiong to websocket', wsUri);
+		
+		ws = new WebSocket(wsUri);
+		ws.onopen = function(evt) { onOpen(evt); };
+		ws.onclose = function(evt) { onClose(evt); };
+		ws.onmessage = function(evt) { onMessage(evt); };
+		ws.onerror = function(evt) { onError(evt); };
+	}
+	
+	function onOpen(evt){
+		console.log('WS CONNECTED');
+		connected = true;
+		clear_blocks();
+		$('#errorNotificationPanel').fadeOut();
+		ws.send(JSON.stringify({type: 'get', v:1}));
+		ws.send(JSON.stringify({type: 'chainstats', v:1}));
+	}
+
+	function onClose(evt){
+		console.log('WS DISCONNECTED', evt);
+		connected = false;
+		setTimeout(function(){ connect(); }, 5000);					//try again one more time, server restarts are quick
+	}
+
+	/*function onMessage(msg){
+		try{
+			var msgObj = JSON.parse(msg.data);
+			if(msgObj.marble){
+				console.log('rec', msgObj.msg, msgObj);
+				//build_ball(msgObj.marble);
+			}
+			else if(msgObj.msg === 'chainstats'){
+				console.log('rec', msgObj.msg, ': ledger blockheight', msgObj.chainstats.height, 'block', msgObj.blockstats.height);
+				if(msgObj.blockstats && msgObj.blockstats.transactions) {
+                    var e = formatDate(msgObj.blockstats.transactions[0].timestamp.seconds * 1000, '%M/%d/%Y &nbsp;%I:%m%P');
+                    $('#blockdate').html('<span style="color:#fff">TIME</span>&nbsp;&nbsp;' + e + ' UTC');
+                    var temp =  {
+                        id: msgObj.blockstats.height,
+                        blockstats: msgObj.blockstats
+                    };
+                    new_block(temp);								//send to blockchain.js
+				}
+			}
+			else console.log('rec', msgObj.msg, msgObj);
+		}
+		catch(e){
+			console.log('ERROR', e);
+		}
+	}*/
+
+	function onError(evt){
+		console.log('ERROR ', evt);
+		if(!connected && bag.e == null){											//don't overwrite an error message
+			$('#errorName').html('Warning');
+			$('#errorNoticeText').html('Waiting on the node server to open up so we can talk to the blockchain. ');
+			$('#errorNoticeText').append('This app is likely still starting up. ');
+			$('#errorNoticeText').append('Check the server logs if this message does not go away in 1 minute. ');
+			$('#errorNotificationPanel').fadeIn();
+		}
+	}
+}
+
+    
+   
+</script>
+        
+     
+	</head>
+    
+    
+	<body bgcolor="#ead3f7">
+        <div>
+        <h3>
+            Blockchain hyperledger demo using IBM-Blockchain-js
+            </h3>
+        </div>
+        
+        <div  >
+            <label> Select Sender and Receiver</label> <br><br>
+          <label> Sender</label>
+            
+           <select id="select1">
+           
+  <option value="A">A</option>
+  <option value="B">B</option>
+</select>  &nbsp;
+            
+             <lable > Amount</lable><input  id ="amount" type="text">
+         &nbsp;&nbsp;&nbsp;&nbsp;
+      <label> Receiver</label>  
+            
+            <select id="select2">
+           
+  <option value="A">A</option>
+  <option value="B">B</option>
+</select> &nbsp;
+            
+           
+            
+        <input id="submit" type="button" value="submit" >
+        </div>
+        
+        <br> <br><br>
+        
+        <div>
+        
+        <lable> Check balance </lable>
+            <select>
+           
+    <option value="A">A</option>
+    <option value="B">B</option>
+        </select>  
+        
+        <input type="button" value="get">
+            <input type="text">
+        </div>
+        
+	<!-- script references -->
+		<script src="lib/jquery/dist/jquery.min.js"></script>
+		<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	</body>
+</html>
