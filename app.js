@@ -223,8 +223,7 @@ function cb_deployed(e){
 				wss.broadcast({msg: 'reset', Block:"new Block"});
                 
           
-				//chaincode.query.read(['_marbleindex'], cb_got_index);
-				//chaincode.query.read(['_opentrades'], cb_got_trades);
+				
 			}
 			
 			//got the block's stats, lets send the statistics
@@ -240,40 +239,7 @@ function cb_deployed(e){
 				}
 			}
 			
-            /*
-			//got the marble index, lets get each marble
-			function cb_got_index(e, index){
-				if(e != null) console.log(' index error:', e);
-				else{
-					try{
-						var json = JSON.parse(index);
-						for(var i in json){
-							console.log('!', i, json[i]);
-							chaincode.query.read([json[i]], cb_got_marble);					//iter over each, read their values
-						}
-					}
-					catch(e){
-						console.log(' index msg error:', e);
-					}
-				}
-			}
-			
-			//call back for getting a marble, lets send a message
-			function cb_got_marble(e, marble){
-				if(e != null) console.log(' error:', e);
-				else {
-					try{
-						wss.broadcast({msg: 'marbles', marble: JSON.parse(marble)});
-					}
-					catch(e){
-						console.log('marble msg error', e);
-					}
-				}
-			}
-			
-		*/
-            
-            
+           
 		});
 	}
 }

@@ -11,12 +11,10 @@ module.exports.setup = function(sdk, cc){
 };
 
 module.exports.process_msg = function(ws, data){
-	if(data.v === 1){																						//only look at messages for part 1
-		//if(data.type == 'create'){
+	if(data.v === 1){																						
         if(data.type == 'transfer'){
 			console.log('Transfering from' + data.sender + 'to' + data.receiver );
-			//if(data.name && data.color && data.size && data.user){
-				//chaincode.invoke.init_marble([data.name, data.color, data.size, data.user], cb_invoked);	//create a new marble
+			
            if(data.sender && data.receiver && data.value){
 				chaincode.invoke.invoke([data.sender, data.receiver, data.value], cb_invoked);
 			}
@@ -41,35 +39,7 @@ module.exports.process_msg = function(ws, data){
 		}
 	}
 
-	//got the marble index, lets get each marble
- /*function cb_got_index(e, index){
-		if(e != null) console.log('[ws error] did not get Balance:', e);
-		else{
-			try{
-				var json = JSON.parse(index);
-				var keys = Object.keys(json);
-				var concurrency = 1;
-
-				//serialized version
-				async.eachLimit(keys, concurrency, function(key, cb) {
-					console.log('!', json[key]);
-					chaincode.query.read([json[key]], function(e, marble) {
-						if(e != null) console.log('[ws error] did not get marble:', e);
-						else {
-							if(marble) sendMsg({msg: 'marbles', e: e, marble: JSON.parse(marble)});
-							cb(null);
-						}
-					});
-				}, function() {
-					sendMsg({msg: 'action', e: e, status: 'finished'});
-				});
-			}
-			catch(e){
-				console.log('[ws error] could not parse response', e);
-			}
-		      }
-        }
-	*/
+	
    function cb_got_index(e, a){
        
        
@@ -89,13 +59,7 @@ module.exports.process_msg = function(ws, data){
 				}
    }
    
-    /*function cb_got_index(e, a){
-       // sendMSG({'response: ', e, a});
-        sendMsg({msg: 'Balance', e: e, balance: a});
-        
-		console.log('response: ', e, a);
-	}*/
-    
+   
     
 	function cb_invoked(e, a){
 		console.log('response: ', a);

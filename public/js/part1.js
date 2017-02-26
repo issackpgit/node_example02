@@ -15,12 +15,39 @@ $(document).ready(function(){
         
         transfer(send, rece, valu);
      
-       
-     $("#transfer").html("Amount  "  + valu +" has transfered ");
      
         $("#amount").val("");
+        
+        transferMessage(valu);
        
     });
+    
+    $("#clear").click(function(){                      
+           $("#blockdetails").val("");
+             
+    });
+    
+    
+    function transferMessage(valu){
+        
+        
+     ws.addEventListener("message", function(e) {
+    
+        
+    var message = JSON.parse(e.data);
+         
+      if (message.chainstats){
+         
+          
+      $("#transfer").html("Amount "+ valu + " has transfered ");
+          
+      }
+        
+    });
+        
+    }
+    
+    
     
     
      function transfer(send, rece, valu){
@@ -91,18 +118,25 @@ $(document).ready(function(){
     console.log("data 1 is:"+message.msg);
     console.log("data 2 is:"+ message.blockstats);
     
+     var numBlocks = message.chainstats.height - message.blockstats.height;
+       
+       
+     if (numBlocks != 0){
      
+         $("#statusShow").html("System yet to ready, please wait.....");
+     } else { $("#statusShow").html("System is ready to perform task !");
+            }
+         
     
        
-    if (message.chainstats  || message.blockstats) 
+    if (message.chainstats ) 
    
     {
         console.log("data 3 is:"+ btoa(message.blockstats.transactions[0].payload) );
         
         
         //console.log("data 3 is:"+ message.blockstats.transactions[0].cert );
-        
-        
+       
       
       console.log(message.chainstats);
      console.log(message.blockstats);
@@ -113,60 +147,24 @@ $(document).ready(function(){
        
         $("#chain1").val(message.chainstats.height - 8);
            $("#chain2").val(message.chainstats.height - 7);
-          // $("#chain1").css("background-color", "#DCDCDC");
-           //$("#chain2").css("background-color", "#DCDCDC");
-         // console.log(  ($("#chain2").css("backgroundColor")));
-       // console.log(  ($("#chain2").style("backgroundColor")));   
-   // $("#chain2").css("backgroundColor") = $("#chain2").style.backgroundColor == rgb(255, 255, 255) ? 'red' : 'blue'; 
+          
            $("#chain3").val(message.chainstats.height - 6);
            $("#chain4").val(message.chainstats.height - 5);
-          // $("#chain3").css("background-color", "red");
-          // $("#chain4").css("background-color", "blue");
+         
            $("#chain5").val(message.chainstats.height - 4);
            $("#chain6").val(message.chainstats.height - 3);
-          // $("#chain5").css("background-color", "red");
-         //  $("#chain6").css("background-color", "blue");
+        
            $("#chain7").val(message.chainstats.height - 2);
            $("#chain8").val(message.chainstats.height -1);
-          // $("#chain7").css("background-color", "red");
-         //  $("#chain8").css("background-color", "blue");
+          
         
-        
-    
-    
-    
-      
       
        
     $("#chain9").val("Height of blocks is " + message.chainstats.height);
     
-        
-        // $("#chain1").tooltip( {title:  atob(message.blockstats.transactions[0].payload)});
-        
-        //console.log(atob(message.blockstats.transactions[0].payload));
-     
-        
-        
-       
-        
-        
-        
-      /*  $("#chain1").tooltip( {title:
-       $.get("https://fbe68bbb3e5b47d2bace3ac8c29de41e-vp1.us.blockchain.ibm.com:5004/chain/", function(data, status){
-           // alert("Data: " + data + "\nStatus: " + status);
-             alert(data.height);
-            })
-        }); */
-        
-        
        
     }
        
-       
-
-      
-        
-      // ws.close();
        
     });
     
@@ -311,22 +309,7 @@ $(document).ready(function(){
     });
     
      });
-       /*  $("#chain8").click( function(){
-     var valueIs = $("#chain8").val();
-    valueIs ++;
-    console.log("value to see "+ valueIs);
-        
-     $.get("https://fbe68bbb3e5b47d2bace3ac8c29de41e-vp1.us.blockchain.ibm.com:5004/chain/blocks/" + valueIs ,function(data,status){        
-        var toDisplay = atob(data.transactions[0].payload);
-         console.log(toDisplay);
-         $("#chain8").tooltip( { title: toDisplay
-        
-        })
-         
-     });
-     
-}); */
-    
+      
     
   
      $("#chain8").click( function(){
@@ -348,38 +331,7 @@ $(document).ready(function(){
     });
     
      });
-    
-    /*
- $("#chain1").tooltip(
      
-     $("#balance").click( function(){
-     var valueIs = $("#chain1").val()
-    }),
-     
-     
-     { title:(
-        
-                              
-     
-     
-        $.get("https://fbe68bbb3e5b47d2bace3ac8c29de41e-vp1.us.blockchain.ibm.com:5004/chain/blocks/240" 
-          ,function(data,status){
-            
-        return data.transactions[0].payload;
-            
-        }))
-        
-    }); */
-        
-   /*$("#balance").click( function(){
-    console.log("value is" + $("#chain1").val())
-    });*/
-    
-    
-    //$("#chain1").mouseover(function(){
-     //    alert("Welcome to TutorialsPoint…");
-    //});
-  
   
  
 });
